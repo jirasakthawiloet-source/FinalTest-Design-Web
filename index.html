@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101112">
+  <meta name="description" content="J-Speed อัปเกรดความแรง เพิ่มสไตล์ให้มอเตอร์ไซค์ของคุณ คัดสรรอะไหล่แต่งคุณภาพพรีเมียม ส่งไวทั่วประเทศ">
+  <title>J-Speed — อะไหล่แต่งมอเตอร์ไซค์</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: '#101112', panel: '#17191a', line: '#2a2d2e', speed: '#ef382f', silver: '#c7cbcc' },
+          fontFamily: { sans: ['IBM Plex Sans Thai', 'sans-serif'], display: ['Barlow Condensed', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: dark; --red: #ef382f; --ink: #101112; --muted: #a1a5a6; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+    body { margin: 0; background: var(--ink); color: #f4f4f2; font-family: 'IBM Plex Sans Thai', sans-serif; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    .display { font-family: 'Barlow Condensed', sans-serif; }
+    .texture { background-image: linear-gradient(135deg,rgba(255,255,255,.025) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.025) 50%,rgba(255,255,255,.025) 75%,transparent 75%,transparent); background-size: 8px 8px; }
+    .hero-shell { background: radial-gradient(ellipse at 76% 45%,rgba(104,29,26,.26),transparent 42%), linear-gradient(110deg,#151718 0%,#101112 52%,#1a1716 100%); }
+    .hero-photo { filter: saturate(.8) contrast(1.08); animation: photo-in .75s ease-out both; }
+    @keyframes photo-in { from { opacity: .45; transform: scale(1.035); } to { opacity: 1; transform: scale(1); } }
+    .reveal { animation: rise-in .65s cubic-bezier(.2,.75,.25,1) both; }
+    @keyframes rise-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    .category-tile img, .product-image img { transition: transform .55s cubic-bezier(.2,.7,.2,1); }
+    .category-tile:hover img, .product-card:hover .product-image img { transform: scale(1.06); }
+    .red-rule { background: linear-gradient(90deg,var(--red),transparent); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { scrollbar-width: none; }
+    .cart-drawer { transition: transform .28s ease; }
+    .cart-drawer.closed { transform: translateX(102%); }
+    .overlay { transition: opacity .25s ease, visibility .25s ease; }
+    .overlay.hidden-overlay { opacity: 0; visibility: hidden; pointer-events: none; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body class="antialiased">
+  <div class="bg-speed px-4 py-2 text-center text-[11px] font-semibold tracking-wide text-white sm:text-xs">ส่งฟรีเมื่อช้อปครบ ฿1,500 <span class="mx-2 text-white/50">|</span> รับประกันสินค้าทุกชิ้น</div>
+  <header class="sticky top-0 z-40 border-b border-white/10 bg-ink/95 backdrop-blur-md">
+    <div class="mx-auto flex h-[72px] max-w-[1360px] items-center justify-between px-5 lg:px-10">
+      <a href="#top" class="group flex items-center gap-2" aria-label="J-Speed หน้าแรก">
+        <span class="display text-[34px] font-black italic leading-none tracking-tight">J<span class="text-speed">-</span>SPEED</span>
+        <span class="mt-1 hidden border-l border-white/20 pl-2 text-[9px] font-medium uppercase leading-tight tracking-[.18em] text-zinc-500 sm:block">Performance<br>Parts</span>
+      </a>
+      <nav class="hidden items-center gap-8 text-[13px] font-medium text-zinc-300 lg:flex">
+        <a class="transition hover:text-white" href="#categories">หมวดหมู่สินค้า</a>
+        <a class="transition hover:text-white" href="#best-sellers">สินค้าขายดี</a>
+        <a class="transition hover:text-white" href="#why-us">ทำไมต้อง J-Speed</a>
+        <a class="transition hover:text-white" href="#contact">ติดต่อเรา</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <button id="search-toggle" class="grid h-10 w-10 place-items-center text-zinc-300 transition hover:text-white" aria-label="ค้นหาสินค้า" title="ค้นหาสินค้า">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.2 4.2"/></svg>
+        </button>
+        <button id="cart-open" class="relative grid h-10 w-10 place-items-center text-zinc-300 transition hover:text-white" aria-label="เปิดตะกร้าสินค้า" title="ตะกร้าสินค้า">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h2l2.2 11.1a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 1.9-1.5L22 8H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+          <span id="cart-count" class="absolute right-0 top-0 grid h-[17px] min-w-[17px] place-items-center rounded-full bg-speed px-1 text-[10px] font-bold text-white">0</span>
+        </button>
+        <button id="menu-toggle" class="ml-1 grid h-10 w-10 place-items-center text-white lg:hidden" aria-label="เปิดเมนู" aria-expanded="false">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="search-bar" class="hidden border-t border-white/10 bg-panel px-5 py-3">
+      <label class="mx-auto flex max-w-[900px] items-center gap-3">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" class="shrink-0 text-zinc-500"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.2 4.2"/></svg>
+        <input id="search-input" type="search" placeholder="ค้นหาท่อไอเสีย, เบรก, โช้คอัพ..." class="w-full bg-transparent py-1 text-sm text-white outline-none placeholder:text-zinc-600" aria-label="ค้นหาสินค้า">
+        <button id="search-close" class="text-xs text-zinc-400 hover:text-white">ปิด</button>
+      </label>
+    </div>
+    <nav id="mobile-menu" class="hidden border-t border-white/10 bg-ink px-5 py-3 lg:hidden">
+      <a class="block py-2.5 text-sm text-zinc-300" href="#categories">หมวดหมู่สินค้า</a><a class="block py-2.5 text-sm text-zinc-300" href="#best-sellers">สินค้าขายดี</a><a class="block py-2.5 text-sm text-zinc-300" href="#why-us">ทำไมต้อง J-Speed</a><a class="block py-2.5 text-sm text-zinc-300" href="#contact">ติดต่อเรา</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero-shell relative overflow-hidden">
+      <div class="absolute inset-0 texture opacity-20"></div>
+      <div class="relative mx-auto grid min-h-[560px] max-w-[1360px] items-center gap-4 px-5 py-14 md:min-h-[610px] md:grid-cols-[.85fr_1.15fr] md:px-10 md:py-16">
+        <div class="reveal relative z-10 order-2 max-w-[570px] md:order-1">
+          <div class="mb-5 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[.24em] text-zinc-400"><span class="h-px w-8 bg-speed"></span> Built for the ride</div>
+          <p id="hero-kicker" class="display mb-1 text-sm font-semibold uppercase tracking-[.19em] text-speed">Performance, without compromise</p>
+          <h1 id="hero-title" class="display max-w-[610px] text-[48px] font-extrabold uppercase leading-[.98] tracking-tight sm:text-[58px] lg:text-[64px]">อัปเกรดความแรง<br>เพิ่มสไตล์ให้รถคุณ</h1>
+          <p id="hero-description" class="mt-6 max-w-[440px] text-sm leading-7 text-zinc-400 sm:text-base">อะไหล่แต่งสมรรถนะสูง คัดทุกชิ้นเพื่อการขับขี่ที่มั่นใจในแบบของคุณ</p>
+          <div class="mt-8 flex flex-wrap items-center gap-5">
+            <a href="#best-sellers" class="group inline-flex h-12 items-center gap-3 bg-speed px-6 text-sm font-semibold text-white transition hover:bg-red-500">เลือกชมสินค้า <span class="transition group-hover:translate-x-1">→</span></a>
+            <a href="#categories" class="inline-flex items-center gap-2 text-xs font-medium text-zinc-300 transition hover:text-white">เลือกตามหมวดหมู่ <span class="text-speed">↘</span></a>
+          </div>
+          <div class="mt-12 flex items-center gap-5 border-t border-white/10 pt-5">
+            <div id="hero-count" class="display text-[28px] font-bold leading-none">01<span class="text-zinc-600"> / 03</span></div>
+            <div class="h-px w-20 bg-white/20"><div id="hero-progress" class="h-full w-1/3 bg-speed transition-all duration-300"></div></div>
+            <div class="ml-auto flex gap-2">
+              <button class="hero-prev grid h-10 w-10 place-items-center border border-white/20 text-lg text-white transition hover:border-speed hover:bg-speed" aria-label="สไลด์ก่อนหน้า">←</button>
+              <button class="hero-next grid h-10 w-10 place-items-center border border-white/20 text-lg text-white transition hover:border-speed hover:bg-speed" aria-label="สไลด์ถัดไป">→</button>
+            </div>
+          </div>
+        </div>
+        <div class="relative order-1 h-[270px] md:order-2 md:h-[510px]">
+          <div class="absolute inset-0 bg-gradient-to-r from-[#131516] via-transparent to-transparent md:w-1/3"></div>
+          <img id="hero-image" class="hero-photo absolute inset-0 h-full w-full object-cover object-center md:object-[center_55%]" src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1400&q=85" alt="มอเตอร์ไซค์แต่งสไตล์สปอร์ต" fetchpriority="high">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#101112]/60 via-transparent to-[#101112]/5"></div>
+          <div class="absolute bottom-5 right-0 border-l-2 border-speed bg-black/65 px-4 py-3 backdrop-blur-sm md:bottom-9 md:right-2 md:px-5">
+            <span class="block text-[9px] uppercase tracking-[.2em] text-zinc-400">J-Speed selection</span><span id="hero-product" class="display mt-1 block text-2xl font-bold uppercase">Street performance</span>
+          </div>
+          <div class="absolute left-0 top-1/2 hidden -translate-y-1/2 -rotate-90 text-[9px] uppercase tracking-[.25em] text-white/40 md:block">Engineered to move</div>
+        </div>
+      </div>
+      <div class="absolute bottom-0 left-0 h-px w-full red-rule"></div>
+    </section>
+
+    <section class="border-b border-white/5 bg-[#151718]">
+      <div class="mx-auto grid max-w-[1360px] grid-cols-2 gap-y-0 px-5 py-5 sm:grid-cols-4 md:px-10">
+        <div class="flex items-center gap-3 border-white/10 py-2 sm:border-r sm:pr-5"><span class="display text-2xl font-bold text-speed">01</span><span class="text-[11px] font-medium text-zinc-300">ของแท้คัดเกรด</span></div>
+        <div class="flex items-center gap-3 border-white/10 py-2 sm:border-r sm:px-5"><span class="display text-2xl font-bold text-speed">02</span><span class="text-[11px] font-medium text-zinc-300">จัดส่งทั่วไทย</span></div>
+        <div class="flex items-center gap-3 border-white/10 py-2 sm:border-r sm:px-5"><span class="display text-2xl font-bold text-speed">03</span><span class="text-[11px] font-medium text-zinc-300">รับประกันสินค้า</span></div>
+        <div class="flex items-center gap-3 py-2 sm:pl-5"><span class="display text-2xl font-bold text-speed">04</span><span class="text-[11px] font-medium text-zinc-300">ทีมช่างพร้อมแนะนำ</span></div>
+      </div>
+    </section>
+
+    <section id="categories" class="mx-auto max-w-[1360px] px-5 py-20 md:px-10 md:py-24">
+      <div class="mb-8 flex items-end justify-between gap-4">
+        <div><p class="mb-2 text-[10px] font-semibold uppercase tracking-[.23em] text-speed">Find your upgrade</p><h2 class="display text-4xl font-bold uppercase sm:text-5xl">เลือกหมวดหมู่ <span class="text-zinc-600">/</span></h2></div>
+        <a href="#best-sellers" class="hidden items-center gap-2 pb-1 text-xs text-zinc-400 transition hover:text-white sm:flex">ดูสินค้าทั้งหมด <span class="text-speed">→</span></a>
+      </div>
+      <div class="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-5">
+        <button class="category-tile group relative h-[190px] overflow-hidden bg-panel text-left sm:h-[225px]" data-filter="exhaust">
+          <img src="https://image.makewebcdn.com/makeweb/m_1920x0/wjRZoVg0F/S1000RR2019/FB_IMG_1575873904397.jpg?v=202405291424" alt="ท่อไอเสียแต่ง" class="absolute inset-0 h-full w-full object-cover opacity-70" loading="lazy"><span class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></span><span class="absolute left-4 top-4 text-xs text-white/70">01</span><span class="absolute bottom-4 left-4 right-4"><span class="mb-1 block text-[9px] uppercase tracking-[.16em] text-speed">Performance</span><span class="text-sm font-semibold leading-snug">ท่อไอสูตร &<br>อุปกรณ์ระบายไอเสีย</span></span><span class="absolute bottom-4 right-4 text-lg text-white transition group-hover:translate-x-1">↗</span>
+        </button>
+        <button class="category-tile group relative h-[190px] overflow-hidden bg-panel text-left sm:h-[225px]" data-filter="brakes">
+          <img src="https://img.motofiixthailand.com/asset/products/16799727753521260.webp" alt="ระบบเบรกมอเตอร์ไซค์" class="absolute inset-0 h-full w-full object-cover opacity-65" loading="lazy"><span class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></span><span class="absolute left-4 top-4 text-xs text-white/70">02</span><span class="absolute bottom-4 left-4 right-4"><span class="mb-1 block text-[9px] uppercase tracking-[.16em] text-speed">Control</span><span class="text-sm font-semibold leading-snug">ระบบเบรก &<br>มือเบรก/มือครัช</span></span><span class="absolute bottom-4 right-4 text-lg text-white transition group-hover:translate-x-1">↗</span>
+        </button>
+        <button class="category-tile group relative h-[190px] overflow-hidden bg-panel text-left sm:h-[225px]" data-filter="suspension">
+          <img src="https://muayautotire.com/wp-content/uploads/2021/08/2021.18.jpg" alt="ระบบกันสะเทือนมอเตอร์ไซค์" class="absolute inset-0 h-full w-full object-cover opacity-70" loading="lazy"><span class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></span><span class="absolute left-4 top-4 text-xs text-white/70">03</span><span class="absolute bottom-4 left-4 right-4"><span class="mb-1 block text-[9px] uppercase tracking-[.16em] text-speed">Ride quality</span><span class="text-sm font-semibold leading-snug">โช้คอัพ &<br>ระบบกันสะเทือน</span></span><span class="absolute bottom-4 right-4 text-lg text-white transition group-hover:translate-x-1">↗</span>
+        </button>
+        <button class="category-tile group relative h-[190px] overflow-hidden bg-panel text-left sm:h-[225px]" data-filter="controls">
+          <img src="https://img.motofiixthailand.com/asset/products/16342889921776167.webp" alt="ชุดเกียร์โยงและพักเท้าแต่ง" class="absolute inset-0 h-full w-full object-cover object-[65%_center] opacity-60" loading="lazy"><span class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></span><span class="absolute left-4 top-4 text-xs text-white/70">04</span><span class="absolute bottom-4 left-4 right-4"><span class="mb-1 block text-[9px] uppercase tracking-[.16em] text-speed">Rider fit</span><span class="text-sm font-semibold leading-snug">ชุดเกียร์โยง &<br>พักเท้าแต่ง</span></span><span class="absolute bottom-4 right-4 text-lg text-white transition group-hover:translate-x-1">↗</span>
+        </button>
+        <button class="category-tile group relative col-span-2 h-[190px] overflow-hidden bg-panel text-left sm:h-[225px] md:col-span-1" data-filter="safety">
+          <img src="https://down-th.img.susercontent.com/file/01897b7cbe74913899f6d9540f7df933" alt="อุปกรณ์เซฟตี้มอเตอร์ไซค์" class="absolute inset-0 h-full w-full object-cover opacity-65" loading="lazy"><span class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></span><span class="absolute left-4 top-4 text-xs text-white/70">05</span><span class="absolute bottom-4 left-4 right-4"><span class="mb-1 block text-[9px] uppercase tracking-[.16em] text-speed">Ride protected</span><span class="text-sm font-semibold leading-snug">อุปกรณ์เซฟตี้ &<br>ก้านกันล้ม</span></span><span class="absolute bottom-4 right-4 text-lg text-white transition group-hover:translate-x-1">↗</span>
+        </button>
+      </div>
+    </section>
+
+    <section id="best-sellers" class="border-y border-white/5 bg-[#151718]">
+      <div class="mx-auto max-w-[1360px] px-5 py-20 md:px-10 md:py-24">
+        <div class="mb-8 flex flex-wrap items-end justify-between gap-5">
+          <div><p class="mb-2 text-[10px] font-semibold uppercase tracking-[.23em] text-speed">Rider-approved upgrades</p><h2 class="display text-4xl font-bold uppercase sm:text-5xl">สินค้าขายดี <span class="text-zinc-600">/</span></h2></div>
+          <div class="no-scrollbar flex max-w-full gap-2 overflow-x-auto pb-1" role="group" aria-label="กรองสินค้าตามหมวดหมู่">
+            <button class="filter-button whitespace-nowrap border border-speed bg-speed px-4 py-2 text-[11px] font-medium text-white" data-filter="all">ทั้งหมด</button>
+            <button class="filter-button whitespace-nowrap border border-white/15 px-4 py-2 text-[11px] text-zinc-400 transition hover:border-white/50 hover:text-white" data-filter="exhaust">ท่อไอเสีย</button>
+            <button class="filter-button whitespace-nowrap border border-white/15 px-4 py-2 text-[11px] text-zinc-400 transition hover:border-white/50 hover:text-white" data-filter="brakes">เบรก</button>
+            <button class="filter-button whitespace-nowrap border border-white/15 px-4 py-2 text-[11px] text-zinc-400 transition hover:border-white/50 hover:text-white" data-filter="suspension">โช้คอัพ</button>
+          </div>
+        </div>
+        <div id="product-grid" class="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          <article class="product-card group" data-category="exhaust" data-name="ท่อไอเสียสปอร์ต J-Speed RS-1">
+            <div class="product-image relative aspect-[.88] overflow-hidden bg-[#202324]"><img src="https://image.makewebcdn.com/makeweb/m_1920x0/wjRZoVg0F/S1000RR2019/FB_IMG_1575873904397.jpg?v=202405291424" alt="ท่อไอเสียสปอร์ต AKRAPOVIC SLIP ON MOTO GP" class="h-full w-full object-cover" loading="lazy"><span class="absolute left-3 top-3 bg-speed px-2 py-1 text-[9px] font-semibold uppercase tracking-wide">ขายดี</span><button class="quick-add absolute bottom-3 right-3 grid h-10 w-10 translate-y-2 place-items-center bg-white text-ink opacity-0 shadow-lg transition group-hover:translate-y-0 group-hover:opacity-100" aria-label="หยิบท่อไอเสียสปอร์ตใส่ตะกร้า" data-name="ท่อไอเสีย" data-price="24890"><span class="text-xl leading-none">+</span></button></div>
+            <div class="pt-3"><p class="mb-1 text-[9px] uppercase tracking-[.14em] text-zinc-500">Exhaust / Stainless steel</p><h3 class="text-xs font-medium leading-5 text-zinc-100 sm:text-sm">ท่อไอเสียสปอร์ต AKRAPOVIC SLIP ON MOTO GP</h3><div class="mt-2 flex items-center gap-1 text-[11px] text-amber-400"><span>★★★★★</span><span class="ml-1 text-zinc-500">(48)</span></div><div class="mt-3 flex items-center justify-between gap-2"><span class="display text-xl font-bold">฿24,890</span><button class="quick-add border border-white/20 px-2.5 py-2 text-[10px] text-zinc-300 transition hover:border-speed hover:bg-speed hover:text-white sm:px-3" data-name="ท่อไอเสีย" data-price="24890">หยิบใส่ตะกร้า</button></div></div>
+          </article>
+          <article class="product-card group" data-category="brakes" data-name="มือเบรกปรับระดับ CNC Pro">
+            <div class="product-image relative aspect-[.88] overflow-hidden bg-[#202324]"><img src="https://img.motofiixthailand.com/asset/products/16799727753521260.webp" alt="Brembo ปั๊มเบรคบน Racing Logo แดง เบอร์ 19 ข้างขวา" class="h-full w-full object-cover" loading="lazy"><span class="absolute left-3 top-3 bg-white/10 px-2 py-1 text-[9px] font-semibold uppercase tracking-wide text-white backdrop-blur">CNC 6061</span><button class="quick-add absolute bottom-3 right-3 grid h-10 w-10 translate-y-2 place-items-center bg-white text-ink opacity-0 shadow-lg transition group-hover:translate-y-0 group-hover:opacity-100" aria-label="หยิบมือเบรกปรับระดับใส่ตะกร้า" data-name="ปั้มเบรค" data-price="8590"><span class="text-xl leading-none">+</span></button></div>
+            <div class="pt-3"><p class="mb-1 text-[9px] uppercase tracking-[.14em] text-zinc-500">Controls / CNC aluminum</p><h3 class="text-xs font-medium leading-5 text-zinc-100 sm:text-sm">Brembo ปั๊มเบรคบน Racing Logo แดง เบอร์ 19 ข้างขวา</h3><div class="mt-2 flex items-center gap-1 text-[11px] text-amber-400"><span>★★★★★</span><span class="ml-1 text-zinc-500">(32)</span></div><div class="mt-3 flex items-center justify-between gap-2"><span class="display text-xl font-bold">฿8,590</span><button class="quick-add border border-white/20 px-2.5 py-2 text-[10px] text-zinc-300 transition hover:border-speed hover:bg-speed hover:text-white sm:px-3" data-name="ปั้มเบรค" data-price="8590">หยิบใส่ตะกร้า</button></div></div>
+          </article>
+          <article class="product-card group" data-category="suspension" data-name="โช้คหลังปรับพรีโหลด Street-X">
+            <div class="product-image relative aspect-[.88] overflow-hidden bg-[#202324]"><img src="https://muayautotire.com/wp-content/uploads/2021/08/2021.18.jpg" alt="โช้คหลังปรับพรีโหลด PROFENDER="h-full w-full object-cover" loading="lazy"><span class="absolute left-3 top-3 bg-white/10 px-2 py-1 text-[9px] font-semibold uppercase tracking-wide text-white backdrop-blur">ปรับได้ 5 ระดับ</span><button class="quick-add absolute bottom-3 right-3 grid h-10 w-10 translate-y-2 place-items-center bg-white text-ink opacity-0 shadow-lg transition group-hover:translate-y-0 group-hover:opacity-100" aria-label="หยิบโช้คหลังใส่ตะกร้า" data-name="โช้คอัพหลัง" data-price="8990"><span class="text-xl leading-none">+</span></button></div>
+            <div class="pt-3"><p class="mb-1 text-[9px] uppercase tracking-[.14em] text-zinc-500">Suspension / Street series</p><h3 class="text-xs font-medium leading-5 text-zinc-100 sm:text-sm">โช้คหลังปรับพรีโหลด PROFENDER</h3><div class="mt-2 flex items-center gap-1 text-[11px] text-amber-400"><span>★★★★☆</span><span class="ml-1 text-zinc-500">(26)</span></div><div class="mt-3 flex items-center justify-between gap-2"><span class="display text-xl font-bold">฿8,990</span><button class="quick-add border border-white/20 px-2.5 py-2 text-[10px] text-zinc-300 transition hover:border-speed hover:bg-speed hover:text-white sm:px-3" data-name="โช้คอัพหลัง" data-price="8990">หยิบใส่ตะกร้า</button></div></div>
+          </article>
+          <article class="product-card group" data-category="safety" data-name="กันล้มเฟรม Alloy Guard">
+            <div class="product-image relative aspect-[.88] overflow-hidden bg-[#202324]"><img src="https://down-th.img.susercontent.com/file/01897b7cbe74913899f6d9540f7df933" alt="กันสะบัด (STEERING DAMPER) YSS รุ่น RACING STROKE 120 แคมป์ A" class="h-full w-full object-cover" loading="lazy"><span class="absolute left-3 top-3 bg-white/10 px-2 py-1 text-[9px] font-semibold uppercase tracking-wide text-white backdrop-blur">ติดตั้งง่าย</span><button class="quick-add absolute bottom-3 right-3 grid h-10 w-10 translate-y-2 place-items-center bg-white text-ink opacity-0 shadow-lg transition group-hover:translate-y-0 group-hover:opacity-100" aria-label="หยิบกันล้มเฟรมใส่ตะกร้า" data-name="กันสะบัด" data-price="6990"><span class="text-xl leading-none">+</span></button></div>
+            <div class="pt-3"><p class="mb-1 text-[9px] uppercase tracking-[.14em] text-zinc-500">Protection / Alloy series</p><h3 class="text-xs font-medium leading-5 text-zinc-100 sm:text-sm">กันสะบัด (STEERING DAMPER) YSS รุ่น RACING STROKE 120 แคมป์ A</h3><div class="mt-2 flex items-center gap-1 text-[11px] text-amber-400"><span>★★★★★</span><span class="ml-1 text-zinc-500">(19)</span></div><div class="mt-3 flex items-center justify-between gap-2"><span class="display text-xl font-bold">฿6,990</span><button class="quick-add border border-white/20 px-2.5 py-2 text-[10px] text-zinc-300 transition hover:border-speed hover:bg-speed hover:text-white sm:px-3" data-name="กันสะบัด" data-price="6990">หยิบใส่ตะกร้า</button></div></div>
+          </article>
+        </div>
+        <p id="no-results" class="hidden py-12 text-center text-sm text-zinc-500">ไม่พบสินค้าที่ตรงกับการค้นหา</p>
+        <div class="mt-10 text-center"><a href="#contact" class="inline-flex items-center gap-2 border border-white/20 px-6 py-3 text-xs text-zinc-300 transition hover:border-speed hover:text-white">สอบถามสินค้าเพิ่มเติม <span class="text-speed">→</span></a></div>
+      </div>
+    </section>
+
+    <section id="why-us" class="relative overflow-hidden">
+      <div class="absolute inset-0 texture opacity-20"></div>
+      <div class="relative mx-auto max-w-[1360px] px-5 py-20 md:px-10 md:py-24">
+        <div class="mb-12 max-w-xl"><p class="mb-2 text-[10px] font-semibold uppercase tracking-[.23em] text-speed">The J-Speed standard</p><h2 class="display text-4xl font-bold uppercase sm:text-5xl">ของดี ต้องรู้สึกได้<br><span class="text-zinc-500">ทุกครั้งที่ออกตัว</span></h2></div>
+        <div class="grid grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-4">
+          <div class="border-t border-white/15 py-6 sm:pr-6"><span class="display text-3xl font-bold text-speed">01</span><h3 class="mt-5 text-base font-semibold">สินค้าแท้ 100%</h3><p class="mt-2 max-w-[240px] text-xs leading-6 text-zinc-500">คัดเฉพาะแบรนด์และอะไหล่ที่ตรวจสอบแหล่งที่มาได้</p></div>
+          <div class="border-t border-white/15 py-6 sm:pl-6 lg:border-l lg:pr-6"><span class="display text-3xl font-bold text-speed">02</span><h3 class="mt-5 text-base font-semibold">วัสดุเกรดพรีเมียม</h3><p class="mt-2 max-w-[240px] text-xs leading-6 text-zinc-500">งาน CNC อะลูมิเนียมและวัสดุคุณภาพเพื่อความทนทาน</p></div>
+          <div class="border-t border-white/15 py-6 sm:pr-6 lg:border-l lg:pl-6"><span class="display text-3xl font-bold text-speed">03</span><h3 class="mt-5 text-base font-semibold">จัดส่งไวทั่วประเทศ</h3><p class="mt-2 max-w-[240px] text-xs leading-6 text-zinc-500">แพ็กอย่างดี จัดส่งทุกวันทำการ พร้อมเลขติดตามพัสดุ</p></div>
+          <div class="border-t border-white/15 py-6 sm:pl-6 lg:border-l"><span class="display text-3xl font-bold text-speed">04</span><h3 class="mt-5 text-base font-semibold">มีประกันสินค้า</h3><p class="mt-2 max-w-[240px] text-xs leading-6 text-zinc-500">มั่นใจหลังการขาย มีทีมงานพร้อมดูแลและให้คำแนะนำ</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-y border-white/5 bg-[#17191a]">
+      <div class="mx-auto grid max-w-[1360px] items-center gap-8 px-5 py-12 md:grid-cols-[1fr_auto] md:px-10 md:py-14">
+        <div><p class="text-[10px] font-semibold uppercase tracking-[.22em] text-speed">Ride better. Ride J-Speed.</p><h2 class="display mt-2 text-3xl font-bold uppercase sm:text-4xl">พร้อมอัปเกรดรถคู่ใจหรือยัง?</h2></div>
+        <a href="#best-sellers" class="inline-flex h-12 w-fit items-center gap-3 bg-speed px-6 text-sm font-semibold transition hover:bg-red-500">เลือกชมสินค้า <span>→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact" class="bg-[#0c0d0e]">
+    <div class="mx-auto grid max-w-[1360px] gap-10 px-5 py-14 md:grid-cols-[1fr_1fr_1.15fr] md:px-10 md:py-16">
+      <div><a href="#top" class="display text-4xl font-black italic">J<span class="text-speed">-</span>SPEED</a><p class="mt-4 max-w-[300px] text-xs leading-6 text-zinc-500">อัปเกรดความแรง เพิ่มสไตล์ให้มอเตอร์ไซค์ของคุณ อะไหล่แต่งคุณภาพที่พร้อมไปกับทุกเส้นทาง</p><div class="mt-5 flex gap-2">
+        <a href="https://line.me/" target="_blank" rel="noreferrer" aria-label="Line Official" class="grid h-9 w-9 place-items-center border border-white/15 text-[10px] font-bold text-zinc-300 transition hover:border-[#06c755] hover:text-[#06c755]">LINE</a>
+        <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" aria-label="Facebook" class="grid h-9 w-9 place-items-center border border-white/15 text-sm font-bold text-zinc-300 transition hover:border-blue-500 hover:text-blue-400">f</a>
+        <a href="https://shopee.co.th/" target="_blank" rel="noreferrer" aria-label="Shopee" class="grid h-9 w-9 place-items-center border border-white/15 text-[9px] font-bold text-zinc-300 transition hover:border-orange-500 hover:text-orange-400">S</a>
+        <a href="https://www.lazada.co.th/" target="_blank" rel="noreferrer" aria-label="Lazada" class="grid h-9 w-9 place-items-center border border-white/15 text-[9px] font-bold text-zinc-300 transition hover:border-violet-400 hover:text-violet-300">L</a>
+      </div></div>
+      <div><h2 class="mb-5 text-xs font-semibold uppercase tracking-[.16em] text-white">ติดต่อ J-Speed</h2><div class="space-y-4 text-xs leading-5 text-zinc-400"><p class="flex gap-3"><span class="text-speed">โทร</span><a href="tel:021234567" class="transition hover:text-white">02-123-4567</a></p><p class="flex gap-3"><span class="text-speed">LINE</span><a href="https://line.me/" target="_blank" rel="noreferrer" class="transition hover:text-white">@jspeed</a></p><p class="flex gap-3"><span class="text-speed">เวลา</span><span>จันทร์–เสาร์ 09:00–18:00 น.</span></p><p class="flex gap-3"><span class="text-speed">ที่อยู่</span><span>ถนนรามอินทรา แขวงอนุสาวรีย์ เขตบางเขน กรุงเทพฯ 10220</span></p></div></div>
+      <div><h2 class="mb-5 text-xs font-semibold uppercase tracking-[.16em] text-white">หน้าร้าน J-Speed</h2><div class="h-[185px] overflow-hidden border border-white/10 bg-[#17191a]"><iframe title="แผนที่ร้าน J-Speed บนถนนรามอินทรา กรุงเทพฯ" src="https://maps.google.com/maps?q=Ramintra%20Bangkok&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;filter:grayscale(1) invert(.88) contrast(.82)" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><a href="https://maps.google.com/?q=Ramintra+Bangkok" target="_blank" rel="noreferrer" class="mt-3 inline-flex items-center gap-2 text-[10px] text-zinc-500 transition hover:text-white">เปิดแผนที่ <span class="text-speed">↗</span></a></div>
+    </div>
+    <div class="border-t border-white/10"><div class="mx-auto flex max-w-[1360px] flex-col gap-2 px-5 py-4 text-[10px] text-zinc-600 sm:flex-row sm:items-center sm:justify-between md:px-10"><span>© 2026 J-Speed Performance Parts. สงวนลิขสิทธิ์</span><span>Built for the ride.</span></div></div>
+  </footer>
+
+  <div id="toast" class="pointer-events-none fixed bottom-5 left-1/2 z-[70] -translate-x-1/2 translate-y-4 border border-white/10 bg-[#202324] px-5 py-3 text-xs text-white opacity-0 shadow-2xl transition-all" role="status" aria-live="polite">เพิ่มสินค้าในตะกร้าแล้ว</div>
+  <div id="drawer-overlay" class="overlay hidden-overlay fixed inset-0 z-50 bg-black/70" aria-hidden="true"></div>
+  <aside id="cart-drawer" class="cart-drawer closed fixed right-0 top-0 z-[60] flex h-full w-full max-w-[420px] flex-col border-l border-white/10 bg-[#141617] shadow-2xl" aria-label="ตะกร้าสินค้า" aria-hidden="true">
+    <div class="flex items-center justify-between border-b border-white/10 px-5 py-5"><div><p class="text-[10px] uppercase tracking-[.2em] text-speed">Your selection</p><h2 class="display text-2xl font-bold uppercase">ตะกร้าสินค้า</h2></div><button id="cart-close" class="grid h-9 w-9 place-items-center border border-white/15 text-lg text-zinc-300 hover:border-white/50" aria-label="ปิดตะกร้า">×</button></div>
+    <div id="cart-items" class="flex-1 overflow-auto px-5 py-4"><p id="cart-empty" class="py-14 text-center text-sm text-zinc-500">ยังไม่มีสินค้าในตะกร้า</p></div>
+    <div class="border-t border-white/10 px-5 py-5"><div class="mb-4 flex justify-between text-sm"><span class="text-zinc-400">ยอดรวม</span><strong id="cart-total" class="display text-xl">฿0</strong></div><button id="checkout-button" class="w-full bg-speed py-3.5 text-sm font-semibold text-white transition hover:bg-red-500">สั่งซื้อสินค้า</button><p class="mt-3 text-center text-[10px] text-zinc-600">สรุปคำสั่งซื้อกับทีมงานผ่าน LINE Official</p></div>
+  </aside>
+
+  <script>
+    const slides = [
+      { kicker: 'Performance, without compromise', title: 'อัปเกรดความแรง<br>เพิ่มสไตล์ให้รถคุณ', description: 'อะไหล่แต่งสมรรถนะสูง คัดทุกชิ้นเพื่อการขับขี่ที่มั่นใจในแบบของคุณ', label: 'Street performance', image: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1400&q=85', alt: 'มอเตอร์ไซค์แต่งสไตล์สปอร์ต' },
+      { kicker: 'Precision meets control', title: 'ควบคุมได้ดั่งใจ<br>ทุกโค้ง ทุกจังหวะ', description: 'อัปเกรดการควบคุมด้วยชิ้นส่วน CNC ที่ออกแบบมาเพื่อการขับขี่ของคุณ', label: 'Precision control', image: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=1400&q=85', alt: 'รายละเอียดมอเตอร์ไซค์และอุปกรณ์แต่ง' },
+      { kicker: 'Made for every road', title: 'พร้อมไปให้สุด<br>ในทุกเส้นทาง', description: 'ระบบช่วงล่างและอุปกรณ์ปกป้องที่ไว้ใจได้ ทั้งบนถนนและในวันเดินทาง', label: 'Ride with confidence', image: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=1400&q=85', alt: 'มอเตอร์ไซค์สำหรับทุกเส้นทาง' }
+    ];
+    let activeSlide = 0;
+    let slideTimer;
+    const cart = [];
+    const money = value => '฿' + value.toLocaleString('th-TH');
+
+    function showSlide(index) {
+      activeSlide = (index + slides.length) % slides.length;
+      const slide = slides[activeSlide];
+      const image = document.getElementById('hero-image');
+      image.src = slide.image;
+      image.alt = slide.alt;
+      image.style.animation = 'none';
+      requestAnimationFrame(() => { image.style.animation = ''; });
+      document.getElementById('hero-kicker').textContent = slide.kicker;
+      document.getElementById('hero-title').innerHTML = slide.title;
+      document.getElementById('hero-description').textContent = slide.description;
+      document.getElementById('hero-product').textContent = slide.label;
+      document.getElementById('hero-count').innerHTML = `0${activeSlide + 1}<span class="text-zinc-600"> / 0${slides.length}</span>`;
+      document.getElementById('hero-progress').style.width = `${((activeSlide + 1) / slides.length) * 100}%`;
+      clearInterval(slideTimer);
+      slideTimer = setInterval(() => showSlide(activeSlide + 1), 6000);
+    }
+    document.querySelector('.hero-prev').addEventListener('click', () => showSlide(activeSlide - 1));
+    document.querySelector('.hero-next').addEventListener('click', () => showSlide(activeSlide + 1));
+    slideTimer = setInterval(() => showSlide(activeSlide + 1), 6000);
+
+    function renderCart() {
+      const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      document.getElementById('cart-count').textContent = count;
+      document.getElementById('cart-total').textContent = money(total);
+      const container = document.getElementById('cart-items');
+      const empty = document.getElementById('cart-empty');
+      container.querySelectorAll('.cart-row').forEach(row => row.remove());
+      empty.classList.toggle('hidden', cart.length > 0);
+      cart.forEach((item, index) => {
+        const row = document.createElement('div');
+        row.className = 'cart-row flex items-start justify-between gap-4 border-b border-white/10 py-4';
+        row.innerHTML = `<div><p class="text-sm font-medium text-zinc-200"></p><p class="mt-1 text-xs text-zinc-500">${money(item.price)} × ${item.quantity}</p></div><div class="text-right"><strong class="display text-lg">${money(item.price * item.quantity)}</strong><button class="remove-item mt-1 block text-[10px] text-zinc-600 hover:text-speed" data-index="${index}">ลบ</button></div>`;
+        row.querySelector('p').textContent = item.name;
+        container.appendChild(row);
+      });
+      container.querySelectorAll('.remove-item').forEach(button => button.addEventListener('click', () => { cart.splice(Number(button.dataset.index), 1); renderCart(); }));
+    }
+
+    let toastTimer;
+    document.querySelectorAll('.quick-add').forEach(button => button.addEventListener('click', () => {
+      const existing = cart.find(item => item.name === button.dataset.name);
+      if (existing) existing.quantity += 1;
+      else cart.push({ name: button.dataset.name, price: Number(button.dataset.price), quantity: 1 });
+      renderCart();
+      const toast = document.getElementById('toast');
+      toast.textContent = `เพิ่ม ${button.dataset.name} ในตะกร้าแล้ว`;
+      toast.classList.remove('translate-y-4', 'opacity-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.add('translate-y-4', 'opacity-0'), 2200);
+    }));
+
+    const drawer = document.getElementById('cart-drawer');
+    const overlay = document.getElementById('drawer-overlay');
+    function setDrawer(open) {
+      drawer.classList.toggle('closed', !open);
+      drawer.setAttribute('aria-hidden', String(!open));
+      overlay.classList.toggle('hidden-overlay', !open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+    document.getElementById('cart-open').addEventListener('click', () => setDrawer(true));
+    document.getElementById('cart-close').addEventListener('click', () => setDrawer(false));
+    overlay.addEventListener('click', () => setDrawer(false));
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') setDrawer(false); });
+    document.getElementById('checkout-button').addEventListener('click', () => {
+      if (!cart.length) { document.getElementById('cart-empty').textContent = 'เลือกสินค้าที่ถูกใจก่อน แล้วกลับมาสั่งซื้อได้เลย'; return; }
+      const message = cart.map(item => `${item.name} x${item.quantity} (${money(item.price * item.quantity)})`).join('\n');
+      window.open(`https://line.me/R/oaMessage/?${encodeURIComponent('@jspeed')}=${encodeURIComponent('สวัสดีค่ะ ขอสอบถาม/สั่งซื้อสินค้า:\n' + message + '\nยอดรวม ' + money(cart.reduce((sum, item) => sum + item.price * item.quantity, 0)))}`, '_blank', 'noopener');
+    });
+
+    function filterProducts(filter, query = document.getElementById('search-input').value) {
+      const normalizedQuery = query.trim().toLowerCase();
+      let visible = 0;
+      document.querySelectorAll('.product-card').forEach(card => {
+        const matchesFilter = filter === 'all' || card.dataset.category === filter;
+        const matchesQuery = !normalizedQuery || card.dataset.name.toLowerCase().includes(normalizedQuery);
+        card.classList.toggle('hidden', !(matchesFilter && matchesQuery));
+        if (matchesFilter && matchesQuery) visible++;
+      });
+      document.getElementById('no-results').classList.toggle('hidden', visible > 0);
+      document.querySelectorAll('.filter-button').forEach(button => {
+        const selected = button.dataset.filter === filter;
+        button.classList.toggle('bg-speed', selected);
+        button.classList.toggle('border-speed', selected);
+        button.classList.toggle('text-white', selected);
+        button.classList.toggle('text-zinc-400', !selected);
+        button.classList.toggle('border-white/15', !selected);
+      });
+    }
+    document.querySelectorAll('.filter-button').forEach(button => button.addEventListener('click', () => filterProducts(button.dataset.filter)));
+    document.querySelectorAll('.category-tile').forEach(button => button.addEventListener('click', () => {
+      filterProducts(button.dataset.filter);
+      document.getElementById('best-sellers').scrollIntoView({ behavior: 'smooth' });
+    }));
+    document.getElementById('search-toggle').addEventListener('click', () => {
+      document.getElementById('search-bar').classList.toggle('hidden');
+      if (!document.getElementById('search-bar').classList.contains('hidden')) document.getElementById('search-input').focus();
+    });
+    document.getElementById('search-close').addEventListener('click', () => { document.getElementById('search-bar').classList.add('hidden'); document.getElementById('search-input').value = ''; filterProducts('all', ''); });
+    document.getElementById('search-input').addEventListener('input', event => { filterProducts('all', event.target.value); document.getElementById('best-sellers').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+    document.getElementById('menu-toggle').addEventListener('click', event => {
+      const menu = document.getElementById('mobile-menu');
+      const open = menu.classList.toggle('hidden') === false;
+      event.currentTarget.setAttribute('aria-expanded', String(open));
+    });
+    document.querySelectorAll('#mobile-menu a').forEach(link => link.addEventListener('click', () => { document.getElementById('mobile-menu').classList.add('hidden'); document.getElementById('menu-toggle').setAttribute('aria-expanded', 'false'); }));
+  </script>
+</body>
+</html>
